@@ -5,6 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const source = fs.readFileSync(path.join(__dirname, '..', 'dist', 'app.js'), 'utf8');
+const html = fs.readFileSync(path.join(__dirname, '..', 'dist', 'index.html'), 'utf8');
 
 function loadApp(saved = '[]') {
   const controls = { f1: 2, a1: 1, f2: 6, a2: .5, phase: 0, angle: 45, harmonics: 5, signalFreq: 17, sampleRate: 20 };
@@ -65,5 +66,17 @@ test('invalid saved progress cannot prevent the lessons from loading', () => {
     const expected = saved.startsWith('[') ? '1 / 8' : '0 / 8';
     assert.equal(element('progressText').textContent, expected);
     assert.equal(vm.runInContext('completed.size', context), saved.startsWith('[') ? 1 : 0);
+  }
+});
+
+test('every lesson includes a worked example and an answerable concept check', () => {
+  const { context } = loadApp();
+  const answerKey = vm.runInContext('Object.fromEntries(Object.entries(quizFeedback).map(([key, value]) => [key, value.answer]))', context);
+  assert.equal((html.match(/class="worked-example"/g) || []).length, 8);
+  assert.equal((html.match(/class="checkpoint"/g) || []).length, 8);
+  for (const [key, answer] of Object.entries(answerKey)) {
+    const group = html.match(new RegExp(`data-quiz="${key}"[^<]*>[\\s\\S]*?<\\/div>`));
+    assert.ok(group, `missing quiz ${key}`);
+    assert.ok(group[0].includes(`data-answer="${answer}"`), `missing correct option for ${key}`);
   }
 });

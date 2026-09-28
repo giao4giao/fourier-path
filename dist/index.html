@@ -37,7 +37,7 @@
     <header class="topbar" id="top">
       <button class="menu-btn" id="menuBtn" type="button" aria-label="打开课程目录" aria-expanded="false">目录</button>
       <div class="topbar-title">交互式学习路径</div>
-      <a class="top-link" href="#cheatsheet">公式速查</a>
+      <div class="topbar-actions"><a class="top-link" href="#applications">实战案例</a><a class="top-link" href="#cheatsheet">公式速查</a></div>
     </header>
 
     <section class="hero">
@@ -106,6 +106,10 @@
           <p class="insight" id="phaseInsight">0°：波从零点向上出发。</p>
         </div>
       </div>
+      <div class="worked-example">
+        <div><span class="example-label">带着数字看</span><h3>4 Hz 的波，一圈要多久？</h3><p>周期 T = 1/f = 1/4 秒 = 0.25 秒。若振幅 A = 2、初相位 φ = 90°，则 x(0) = 2sin(90°) = 2；只改变相位，0.25 秒的周期仍然不变。</p></div>
+        <details><summary>自己试试：2 Hz 的波在 1 秒内完成几圈？</summary><p>完成 2 圈。它的周期是 0.5 秒；相位只决定从圆周的哪个位置开始数。</p></details>
+      </div>
       <div class="checkpoint"><div><strong>检查点</strong><p>改变相位会让频谱峰值左右移动吗？</p></div><div class="choice-row" data-quiz="phase"><button type="button" data-answer="no">不会</button><button type="button" data-answer="yes">会</button></div><p class="feedback" aria-live="polite"></p></div>
       <button class="complete-btn" type="button" data-complete="1">完成第一阶段</button>
     </section>
@@ -131,6 +135,11 @@
           <div class="value-pills"><span>实部 <strong id="realOut">0.707</strong></span><span>虚部 <strong id="imagOut">0.707</strong></span><span>模长 <strong>1.000</strong></span></div>
         </div>
       </div>
+      <div class="worked-example">
+        <div><span class="example-label">带着数字看</span><h3>把 120° 写成复数</h3><p>e<sup>i120°</sup> = cos120° + i sin120° = −1/2 + i√3/2。实部为负、虚部为正，所以向量在第二象限；模长仍为 1。</p></div>
+        <details><summary>自己试试：旋转 180° 后，实部与虚部分别是多少？</summary><p>cos180° = −1，sin180° = 0，因此落在负实轴上，不属于任何一个开放象限。</p></details>
+      </div>
+      <div class="checkpoint"><div><strong>概念检查</strong><p>单位向量旋转到 120°，哪一部分是负数？</p></div><div class="choice-row" data-quiz="quadrant"><button type="button" data-answer="real">实部</button><button type="button" data-answer="imag">虚部</button></div><p class="feedback" aria-live="polite"></p></div>
       <button class="complete-btn" type="button" data-complete="2">完成第二阶段</button>
     </section>
 
@@ -151,6 +160,11 @@
           <p class="lab-note">方波只需要奇次谐波：1、3、5…；振幅按 1/n 衰减。</p>
         </div>
       </div>
+      <div class="worked-example">
+        <div><span class="example-label">带着数字看</span><h3>方波的前两项是什么？</h3><p>对幅值 ±1 的对称方波，x(t) ≈ (4/π)[sin(ω₀t) + sin(3ω₀t)/3]。基频项幅值约 1.273，三次谐波幅值约 0.424；偶次谐波系数为零。</p></div>
+        <details><summary>自己试试：为什么加到 25 项，跳变处仍有过冲？</summary><p>不连续点附近的振荡区域会变窄，但峰值相对跳变量的比例趋向约 9%。这不是画图误差，而是傅里叶部分和的吉布斯现象。</p></details>
+      </div>
+      <div class="checkpoint"><div><strong>概念检查</strong><p>这个对称方波的二次谐波系数是多少？</p></div><div class="choice-row" data-quiz="harmonics"><button type="button" data-answer="zero">0</button><button type="button" data-answer="half">基频的一半</button></div><p class="feedback" aria-live="polite"></p></div>
       <button class="complete-btn" type="button" data-complete="3">完成第三阶段</button>
     </section>
 
@@ -166,6 +180,10 @@
         <div class="duality-grid">
           <div><strong>时间越窄</strong><span>频率越宽</span><p>短脉冲需要很多频率共同合成。</p></div><div><strong>时间越宽</strong><span>频率越窄</span><p>持续很久的纯音频率更集中。</p></div><div><strong>时间平移</strong><span>相位改变</span><p>幅度谱不变，但相位随频率倾斜。</p></div><div><strong>时间卷积</strong><span>频率相乘</span><p>滤波器因此能在频域高效工作。</p></div>
         </div>
+      </div>
+      <div class="worked-example">
+        <div><span class="example-label">带着数字看</span><h3>一个脉冲为什么有许多频率？</h3><p>令 x(t) 在 −τ/2 到 τ/2 之间等于 1，其余为 0。代入变换定义可得 X(f) = τ sinc(fτ)，其中 sinc(u) = sin(πu)/(πu)，且 sinc(0) = 1。第一个零点在 |f| = 1/τ：脉冲越短，主瓣越宽。</p></div>
+        <details><summary>自己试试：脉冲宽度从 0.2 秒减到 0.1 秒，第一零点怎样变化？</summary><p>从 5 Hz 移到 10 Hz。时间宽度减半，频域主瓣的尺度约变成两倍。</p></details>
       </div>
       <div class="checkpoint"><div><strong>概念检查</strong><p>一个持续时间极短的脉冲，它的频谱通常更窄还是更宽？</p></div><div class="choice-row" data-quiz="pulse"><button type="button" data-answer="wide">更宽</button><button type="button" data-answer="narrow">更窄</button></div><p class="feedback" aria-live="polite"></p></div>
       <button class="complete-btn" type="button" data-complete="4">完成第四阶段</button>
@@ -189,6 +207,11 @@
           <div class="reader-answer"><p>为什么只画到 32 Hz？</p><button type="button" id="revealNyquist">显示解释</button><div id="nyquistExplain" hidden>对实信号，负频率与正频率共轭对称；最高无歧义频率是奈奎斯特频率 fₛ/2 = 32 Hz。</div></div>
         </div>
       </div>
+      <div class="worked-example">
+        <div><span class="example-label">带着数字看</span><h3>采 1000 点，能分开多近的频率？</h3><p>当 fₛ = 1000 Hz、N = 1000，记录时长 T = 1 秒，DFT 格点间隔 Δf = 1 Hz。补零后若用 4096 点 FFT，显示格点变成约 0.244 Hz，但真实记录仍只有 1 秒，补零只是让频谱曲线采样更密。</p></div>
+        <details><summary>自己试试：想把格点间隔降到 0.5 Hz，应记录多久？</summary><p>至少记录 2 秒，因为 Δf = 1/T。在 fₛ 不变时，需要 2000 个真实采样点；补零不延长观察时间。</p></details>
+      </div>
+      <div class="checkpoint"><div><strong>概念检查</strong><p>给同一段数据补零，会增加真实的观察时长吗？</p></div><div class="choice-row" data-quiz="padding"><button type="button" data-answer="no">不会</button><button type="button" data-answer="yes">会</button></div><p class="feedback" aria-live="polite"></p></div>
       <button class="complete-btn" type="button" data-complete="5">完成第五阶段</button>
     </section>
 
@@ -209,6 +232,11 @@
           <label class="range-label">采样频率 <output id="sampleRateOut">20 Hz</output><input id="sampleRate" type="range" min="8" max="60" value="20" step="1"></label>
         </div>
       </div>
+      <div class="worked-example">
+        <div><span class="example-label">带着数字看</span><h3>20 Hz 采样的 17 Hz 变成什么？</h3><p>在 t = n/20 秒处，sin(2π·17n/20) = sin(2πn − 2π·3n/20) = −sin(2π·3n/20)。样本与相位反转的 3 Hz 波完全一样；仅凭这些样本无法确定原信号是 17 Hz 还是低频别名。</p></div>
+        <details><summary>自己试试：如果改用 50 Hz 采样 17 Hz，是否仍会折返？</summary><p>不会。奈奎斯特频率是 25 Hz，高于 17 Hz；实际系统仍需要采样前滤波和合理余量。</p></details>
+      </div>
+      <div class="checkpoint"><div><strong>概念检查</strong><p>发生混叠后，只凭已采得的样本能恢复原来的 17 Hz 吗？</p></div><div class="choice-row" data-quiz="alias"><button type="button" data-answer="no">不能</button><button type="button" data-answer="yes">能</button></div><p class="feedback" aria-live="polite"></p></div>
       <button class="complete-btn" type="button" data-complete="6">完成第六阶段</button>
     </section>
 
@@ -227,6 +255,11 @@
         </div>
           <div class="mini-lab card"><div class="card-head"><div>窗形与频谱权衡</div><output id="windowOut">矩形窗</output></div><canvas id="windowCanvas" width="640" height="430" aria-label="窗函数的时域形状和归一化频率响应"></canvas><p class="lab-note">上：窗口权重　下：64 点窗口的归一化频率响应（中心为 0，横轴范围 ±8 个频率格点）</p></div>
       </div>
+      <div class="worked-example">
+        <div><span class="example-label">带着数字看</span><h3>窗会怎样改变读出的幅值？</h3><p>对 64 点周期 Hann 窗，窗口权重的平均值是 0.5。一个正好落在内部 DFT 格点、远离直流和奈奎斯特频率的纯音，乘窗后的峰值约为未乘窗时的一半；做幅值标定时需要补偿这个相干增益。若频率不落在格点上，还会有栅栏效应，不能只靠乘 2 解决。</p></div>
+        <details><summary>自己试试：需要观察强峰附近的弱信号，三种窗优先比较哪一个？</summary><p>可先比较 Blackman 窗：它的旁瓣较低，代价是主瓣更宽。若两峰距离极近，也要检查较宽主瓣是否把它们合在一起。</p></details>
+      </div>
+      <div class="checkpoint"><div><strong>概念检查</strong><p>在这三种窗中，哪一种通常具有最低的旁瓣？</p></div><div class="choice-row" data-quiz="window"><button type="button" data-answer="blackman">Blackman</button><button type="button" data-answer="rect">矩形窗</button></div><p class="feedback" aria-live="polite"></p></div>
       <button class="complete-btn" type="button" data-complete="7">完成第七阶段</button>
     </section>
 
@@ -243,7 +276,29 @@
         <div><p class="eyebrow">毕业挑战</p><h3>为一段振动信号设计完整分析流程</h3><p>说明采样率、记录时长、窗函数、FFT 点数、幅值标定，并解释可能出现的混叠与泄漏。</p></div>
         <div class="challenge-checks"><label><input type="checkbox"> 采样率有抗混叠余量</label><label><input type="checkbox"> 记录时长满足频率分辨率</label><label><input type="checkbox"> 窗函数符合测量目标</label><label><input type="checkbox"> 单边谱幅值已正确缩放</label><label><input type="checkbox"> 结论包含不确定性</label></div>
       </div>
+      <div class="worked-example">
+        <div><span class="example-label">完整方案示例</span><h3>分析最高约 180 Hz 的设备振动</h3><p>先在采样前用抗混叠滤波限制高于目标频带的成分，再以 1000 Hz 采样。记录 4096 个真实样本时，时长为 4.096 秒，DFT 格点约 0.244 Hz。若频率会随时间变化，再把记录分段做短时傅里叶变换；每段使用 Hann 窗，并报告窗的幅值修正、时间分辨率和频率不确定性。</p></div>
+        <details><summary>自己试试：为什么把同一批 4096 点数据补零到 8192 点，不等于记录了 8.192 秒？</summary><p>补上的点没有新的测量信息。显示格点会更密，但真实观察时长仍是 4.096 秒，相近频率的可分辨能力没有凭空提高。</p></details>
+      </div>
+      <div class="checkpoint"><div><strong>概念检查</strong><p>信号频率随时间明显变化时，应优先增加哪种分析？</p></div><div class="choice-row" data-quiz="stft"><button type="button" data-answer="stft">短时傅里叶变换</button><button type="button" data-answer="single">只看整段 FFT</button></div><p class="feedback" aria-live="polite"></p></div>
       <button class="complete-btn" type="button" data-complete="8">完成大师路径</button>
+    </section>
+
+    <section class="section applications" id="applications">
+      <div class="section-title"><div><p class="eyebrow">把知识串起来</p><h2>三个真实分析场景</h2></div><p>每个场景都先定义问题，再选采样与分析参数，最后检查结果能否支持结论。</p></div>
+      <div class="case-grid">
+        <article class="case-card"><span>案例 01 · 音频</span><h3>识别基音与谐波</h3><p>一个稳定音包含 440 Hz 基音和 880 Hz 二次谐波。以 8000 Hz 采样 1 秒，取得 8000 点，格点间隔为 1 Hz；这两个频率正好位于第 440 与 880 个格点。</p><ol><li>先检查音频中是否还有高于 4000 Hz 的成分；采样前应限制超出奈奎斯特范围的频率。</li><li>对恰好同步的一秒记录，可用矩形窗观察窄峰；普通录音边界不一定对齐，改用 Hann 窗比较泄漏。</li><li>报告单边谱幅值时，对内部频率格点使用相应的单边谱与窗口增益修正，不把原始 |X[k]| 直接称为振幅。</li></ol><p class="case-result">预期观察：基音 440 Hz，二次谐波 880 Hz；“音高”通常由基音决定。</p></article>
+        <article class="case-card"><span>案例 02 · 设备振动</span><h3>区分相近的机械频率</h3><p>怀疑设备同时存在 48 Hz 与 50 Hz 振动。以 1000 Hz 采样 4000 点，记录 4 秒，格点间隔 0.25 Hz；两个目标频率相差 2 Hz。</p><ol><li>确定传感器与采样前滤波能覆盖目标频带，同时抑制超过 500 Hz 的成分。</li><li>若频率不稳定，使用 Hann 窗减少泄漏，并比较多个时间段；不要只凭一次 FFT 的最高峰下结论。</li><li>给出频率估计、幅值标定方式、噪声底和随时间变化的范围。</li></ol><p class="case-result">预期观察：充分长的稳定记录能显示两个分开的峰；频率漂移会使峰变宽。</p></article>
+        <article class="case-card"><span>案例 03 · 变频信号</span><h3>找到频率变化的时刻</h3><p>一秒内频率从 100 Hz 升到 500 Hz。整段 FFT 会汇总所有时刻的能量，无法指出何时经过 300 Hz；这时改用短时傅里叶变换。</p><ol><li>以 2000 Hz 采样。每窗取 256 个真实样本，对应 128 毫秒；窗内格点间隔约 7.8 Hz。</li><li>相邻窗口移动 64 个样本，即每 32 毫秒更新一次观察，配合 Hann 窗得到随时间变化的频谱。</li><li>若想更准确定位变化时刻，可缩短窗口，但频率分辨能力会下降。</li></ol><p class="case-result">预期观察：声谱图上的亮带随时间从低频向高频移动。</p></article>
+      </div>
+      <div class="pitfalls"><h3>六个经常混淆的判断</h3><div class="pitfall-grid">
+        <div><strong>提高采样率就一定能分开近邻频率？</strong><p>不一定。固定样本数 N 时，Δf = fₛ/N 反而变大；要延长真实观察时长。</p></div>
+        <div><strong>补零能增加新信息？</strong><p>不能。它让频谱曲线的显示格点更密，不能替代更长的记录。</p></div>
+        <div><strong>加窗能修复混叠？</strong><p>不能。混叠在采样时已经发生；应在采样前滤波并选足够高的采样率。</p></div>
+        <div><strong>只看幅度谱就能重建波形？</strong><p>通常不能。相位记录各频率如何对齐，重建需要复数频谱的信息。</p></div>
+        <div><strong>FFT 得到的是另一种变换？</strong><p>不是。FFT 是计算 DFT 的快速算法，频率格点仍由采样率和点数决定。</p></div>
+        <div><strong>频谱柱高度就是原始信号幅值？</strong><p>未必。要说明单双边谱、DFT 归一化、窗口增益及频率是否落在格点上。</p></div>
+      </div></div>
     </section>
 
     <section class="section cheatsheet" id="cheatsheet">

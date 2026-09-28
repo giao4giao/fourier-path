@@ -35,7 +35,17 @@ function windowResponse(type,offset){const count=64;let real=0,imag=0,total=0;fo
 function drawWindow(){const c=$('#windowCanvas'),{ctx,w,h}=setupCanvas(c),split=h*.52;ctx.fillStyle=COLORS.bg;ctx.fillRect(0,0,w,h);grid(ctx,w,h,split);let pts=[];for(let x=0;x<=w;x+=2)pts.push([x,split*.85-windowValue(currentWindow,x/w)*split*.62]);line(ctx,pts,COLORS.cyan,2.2);const top=split+30,bottom=h-25,span=bottom-top,response=[];for(let x=0;x<=w;x+=2){const offset=(x/w-.5)*16,db=20*Math.log10(Math.max(windowResponse(currentWindow,offset),1e-5));response.push([x,top+Math.min(90,-db)/90*span])}line(ctx,response,COLORS.amber,2);ctx.fillStyle=COLORS.muted;ctx.font='12px system-ui';ctx.fillText('时域窗口',12,18);ctx.fillText('频域响应（归一化 dB）',12,split+20);ctx.fillText('0 dB',w/2+8,top+12);ctx.fillText('−90 dB',12,bottom-4);$('#windowOut').value=windowNames[currentWindow]}
 $$('.window-card').forEach(b=>b.addEventListener('click',()=>{currentWindow=b.dataset.window;$$('.window-card').forEach(x=>x.classList.toggle('active',x===b));drawWindow()}));
 
-const quizAnswers={phase:'no',pulse:'wide'};$$('[data-quiz]').forEach(group=>group.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;const ok=btn.dataset.answer===quizAnswers[group.dataset.quiz];$$('button',group).forEach(b=>b.classList.remove('correct','wrong'));btn.classList.add(ok?'correct':'wrong');const fb=group.parentElement.querySelector('.feedback');fb.textContent=ok?(group.dataset.quiz==='phase'?'正确。相位改变会改变频谱的相位，但不会搬动幅度谱峰值。':'正确。时间越集中，通常需要越宽的频率范围来合成。'):'再想想时间平移与时频宽度的关系。'}));
+const quizFeedback={
+  phase:{answer:'no',correct:'正确。相位改变频谱相位，不会移动幅度谱峰值。',wrong:'相位改变起点；频率决定每秒重复次数。'},
+  quadrant:{answer:'real',correct:'正确。120° 在第二象限，cos120° 为负。',wrong:'第二象限的横坐标为负，纵坐标为正。'},
+  harmonics:{answer:'zero',correct:'正确。对称方波只有奇次谐波。',wrong:'观察方波半波对称性：偶次谐波的贡献会相互抵消。'},
+  pulse:{answer:'wide',correct:'正确。时间越集中，通常需要越宽的频率范围来合成。',wrong:'对矩形脉冲，第一频域零点在 1/τ；τ 越小，零点越远。'},
+  padding:{answer:'no',correct:'正确。补零使频谱显示更细密，没有增加真实采样时长。',wrong:'补上的零并非新测量值；T 只由真实样本数和采样率决定。'},
+  alias:{answer:'no',correct:'正确。17 Hz 与相位反转的 3 Hz 在这些采样时刻完全一致。',wrong:'若两种连续信号给出相同样本，样本本身无法区分它们。'},
+  window:{answer:'blackman',correct:'正确。Blackman 旁瓣低，但主瓣也更宽。',wrong:'矩形窗主瓣较窄，但旁瓣比 Blackman 高。'},
+  stft:{answer:'stft',correct:'正确。分段分析才能看到频率随时间怎样变化。',wrong:'整段 FFT 汇总了整个记录，无法指出变化发生的时刻。'}
+};
+$$('[data-quiz]').forEach(group=>{$$('button',group).forEach(b=>b.setAttribute('aria-pressed','false'));group.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn||!group.contains(btn))return;const feedback=quizFeedback[group.dataset.quiz],ok=btn.dataset.answer===feedback.answer;$$('button',group).forEach(b=>{b.classList.remove('correct','wrong');b.setAttribute('aria-pressed',String(b===btn))});btn.classList.add(ok?'correct':'wrong');group.parentElement.querySelector('.feedback').textContent=ok?feedback.correct:feedback.wrong})});
 $('#revealNyquist').addEventListener('click',()=>{const d=$('#nyquistExplain');d.hidden=!d.hidden;$('#revealNyquist').textContent=d.hidden?'显示解释':'收起解释'});
 
 const STORE='fourier-path-progress-v1';
