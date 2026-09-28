@@ -20,6 +20,7 @@ dist/                 网站文件，可直接部署
   app.js
 docker/
   nginx.conf          Nginx 静态站点配置
+tests/                核心计算与进度读取的回归测试
 Dockerfile
 docker-compose.yml
 wrangler.jsonc        Cloudflare Workers 静态资源配置
@@ -34,6 +35,12 @@ python3 -m http.server 8080 --directory dist
 ```
 
 然后访问 `http://localhost:8080`。
+
+运行计算与进度读取的回归测试：
+
+```bash
+npm test
+```
 
 ## Cloudflare Pages 部署
 

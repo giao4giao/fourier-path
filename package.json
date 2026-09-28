@@ -4,6 +4,7 @@
   "private": true,
   "description": "从直觉到精通的中文傅里叶变换交互学习网站",
   "scripts": {
+    "test": "node --test",
     "dev": "npx wrangler@latest dev",
     "deploy:workers": "npx wrangler@latest deploy",
     "deploy:pages": "npx wrangler@latest pages deploy dist --project-name fourier-path"
