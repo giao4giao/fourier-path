@@ -82,6 +82,7 @@
         <article><span>数字实现</span><strong>05—07</strong><p>理解采样、DFT、FFT、混叠、分辨率与窗函数。</p></article>
         <article><span>工程精通</span><strong>08+</strong><p>能选参数、判读频谱、避免陷阱并迁移到多领域。</p></article>
       </div>
+      <p class="roadmap-hint"><strong>没有数学基础也可以从第一课开始。</strong>每阶段先读图和名词，再按步骤操作实验；看到公式时先认清每个符号，最后做算例和检查题。遇到不熟悉的积分，可先把它理解成“把许多很小的贡献加起来”，之后再回来看推导。</p>
     </section>
 
     <section class="lesson section" id="intuition" data-lesson="1">
@@ -106,6 +107,10 @@
           <p class="insight" id="phaseInsight">0°：波从零点向上出发。</p>
         </div>
       </div>
+      <div class="lesson-depth">
+        <div><span class="depth-label">先读懂图</span><h3>一个周期，是回到相同状态的一整圈</h3><p>横轴是时间，纵轴是信号的数值。判断一圈时，要看到波形回到相同高度，而且接下来朝相同方向变化；相邻的“向上穿过零点”之间才是一整个周期。波峰之间的距离也可以用来量周期。</p><p>振幅改变上下高度，频率改变一秒里有多少圈，相位改变从这一圈的哪里开始。把三个量一次只改一个，就能看出它各自负责什么。对固定频率，正相位让波形向左移动；例如 2 Hz 加上 90°，相当于向左移动 0.125 秒。</p></div>
+        <div class="depth-steps"><strong>照着实验</strong><ol><li>在顶部实验室把“振幅 B”调到 0，只留下 A；将 A 的频率从 2 调到 4，数一秒内的波峰如何增加。</li><li>保持频率不变，只改 A 的振幅，观察波峰变高，但波峰间距不变。</li><li>回到本阶段拖动相位滑块，比较浅色参考波与亮色波：两者间距相同，起点不同。</li></ol></div>
+      </div>
       <div class="worked-example">
         <div><span class="example-label">带着数字看</span><h3>4 Hz 的波，一圈要多久？</h3><p>周期 T = 1/f = 1/4 秒 = 0.25 秒。若振幅 A = 2、初相位 φ = 90°，则 x(0) = 2sin(90°) = 2；只改变相位，0.25 秒的周期仍然不变。</p></div>
         <details><summary>自己试试：2 Hz 的波在 1 秒内完成几圈？</summary><p>完成 2 圈。它的周期是 0.5 秒；相位只决定从圆周的哪个位置开始数。</p></details>
@@ -121,6 +126,7 @@
           <p class="eyebrow">复数、象限与相位</p>
           <h2>所谓“象限变化”，其实是一个向量在旋转</h2>
           <p class="lead">复数不是多出来的神秘数字，而是同时记录两个方向：横轴是实部，纵轴是虚部。欧拉公式把旋转和正弦波连在了一起。</p>
+          <p class="bridge-note">先把 a + bi 当成坐标 (a,b)；i 只是用来标记垂直方向，满足 i² = −1。下面的公式说的是：角度 θ 对应单位圆上的一个点。</p>
           <div class="formula featured">e<sup>iθ</sup> = cos θ + i sin θ</div>
           <table class="quadrant-table">
             <thead><tr><th>象限</th><th>角度</th><th>cos（实部）</th><th>sin（虚部）</th></tr></thead>
@@ -134,6 +140,10 @@
           <label class="range-label">角度 θ<input id="angle" type="range" min="0" max="360" value="45" step="1"></label>
           <div class="value-pills"><span>实部 <strong id="realOut">0.707</strong></span><span>虚部 <strong id="imagOut">0.707</strong></span><span>模长 <strong>1.000</strong></span></div>
         </div>
+      </div>
+      <div class="lesson-depth">
+        <div><span class="depth-label">拆开符号</span><h3>复数是平面上的一个点，也是一支箭头</h3><p>写成 z = a + bi 时，a 表示左右位置，b 表示上下位置，i 满足 i² = −1。把点 (a,b) 与原点连起来，就得到一支向量。它的长度是 √(a²+b²)，与正实轴的夹角是相位。</p><p>单位圆上长度恒为 1，所以横坐标是 cosθ，纵坐标是 sinθ；这正是欧拉公式的右边。角度持续增大时，箭头逆时针旋转，纵坐标随时间起伏，形成正弦波。落在坐标轴上的点要单独判断，不能硬归入某个象限。</p></div>
+        <div class="depth-steps"><strong>照着实验</strong><ol><li>把角度依次调到 0°、90°、180°、270°，记录实部与虚部的符号和数值。</li><li>调到 45°，比较两个分量：它们相等，约为 0.707；平方后相加应接近 1。</li><li>再调到 120°，先自己判断象限，再核对图中的坐标与下方读数。</li></ol></div>
       </div>
       <div class="worked-example">
         <div><span class="example-label">带着数字看</span><h3>把 120° 写成复数</h3><p>e<sup>i120°</sup> = cos120° + i sin120° = −1/2 + i√3/2。实部为负、虚部为正，所以向量在第二象限；模长仍为 1。</p></div>
@@ -149,6 +159,7 @@
         <div class="lesson-copy">
           <p class="eyebrow">傅里叶级数</p><h2>用许多简单正弦波，拼出复杂的周期波</h2>
           <p class="lead">对周期为 T 的信号，基频是 f₀ = 1/T。傅里叶级数用基频及其整数倍——谐波——逐步逼近原信号。</p>
+          <p class="bridge-note">读下面的式子时，先把 Σ 理解成“从第 1 项开始不断相加”。a₀/2 是波形的平均水平；每个 aₙ、bₙ 决定一种余弦或正弦要加多少。</p>
           <div class="formula multiline">x(t) = a₀/2 + Σ [aₙ cos(nω₀t) + bₙ sin(nω₀t)]<small>ω₀ = 2π/T，n = 1, 2, 3…</small></div>
           <ol class="reasoning-list"><li><strong>选基频</strong><span>周期决定最慢的一圈。</span></li><li><strong>逐个比较</strong><span>用内积测量信号与每个正弦/余弦的相似程度。</span></li><li><strong>得到系数</strong><span>系数告诉你每种谐波需要多少。</span></li><li><strong>重新相加</strong><span>保留越多谐波，重建越精细。</span></li></ol>
           <div class="callout warn"><strong>吉布斯现象</strong><p>在方波跳变处，即使加入越来越多谐波，过冲不会完全消失，只会挤到更窄的区域；极限过冲约为跳变量的 9%。</p></div>
@@ -159,6 +170,10 @@
           <label class="range-label">保留谐波数量<input id="harmonics" type="range" min="1" max="25" value="5" step="1"></label>
           <p class="lab-note">方波只需要奇次谐波：1、3、5…；振幅按 1/n 衰减。</p>
         </div>
+      </div>
+      <div class="lesson-depth">
+        <div><span class="depth-label">公式从哪里来</span><h3>“逐个比较”就是计算投影</h3><p>在一个完整周期里，频率不同的整数倍正弦波互相正交：相乘后，正负面积会抵消。要找第 n 个正弦成分，就把原信号乘以 sin(nω₀t)，再在一个周期内求平均。得到的系数为 bₙ = (2/T)∫₀ᵀx(t)sin(nω₀t)dt；余弦系数 aₙ 用同样方法得到。</p><p>方波上下半周互为相反数，因此偶次谐波在投影时抵消，留下 1、3、5… 次。实验滑块的“5 个”指前五个奇次谐波，即 1、3、5、7、9 次；它不是只保留到五次频率。</p></div>
+        <div class="depth-steps"><strong>照着实验</strong><ol><li>先只保留 1 个奇次谐波：曲线还是光滑的正弦波，无法出现方波的尖锐边缘。</li><li>逐步调到 3、10、25 个，观察平坦部分是否更接近目标、跳变附近的波纹是否更集中。</li><li>留意跳变处：项数增加后波纹区域缩窄，但最高过冲没有简单消失。</li></ol></div>
       </div>
       <div class="worked-example">
         <div><span class="example-label">带着数字看</span><h3>方波的前两项是什么？</h3><p>对幅值 ±1 的对称方波，x(t) ≈ (4/π)[sin(ω₀t) + sin(3ω₀t)/3]。基频项幅值约 1.273，三次谐波幅值约 0.424；偶次谐波系数为零。</p></div>
@@ -174,12 +189,17 @@
         <div class="lesson-copy">
           <p class="eyebrow">连续傅里叶变换</p><h2>当周期无限长，离散谐波变成连续频率</h2>
           <p class="lead">傅里叶级数处理周期信号；傅里叶变换把“重复周期”推向无穷大，因此频率间隔趋近于零，得到连续频谱。</p>
-          <div class="formula-pair"><div><span>正变换：分析</span><div class="formula">X(f) = ∫ x(t)e<sup>−i2πft</sup> dt</div><p>让信号分别与每个频率的反向旋转做比较。</p></div><div><span>逆变换：重建</span><div class="formula">x(t) = ∫ X(f)e<sup>i2πft</sup> df</div><p>按频谱给出的权重，把所有旋转重新相加。</p></div></div>
+          <p class="bridge-note">积分号 ∫ 表示连续地累加；指数中的 i 是复数单位。先不必计算积分，只需记住左式“从时间分析频率”，右式“从频率重建时间”。</p>
+          <div class="formula-pair"><div><span>正变换：分析</span><div class="formula">X(f) = ∫<sub>−∞</sub><sup>∞</sup> x(t)e<sup>−i2πft</sup> dt</div><p>让信号分别与每个频率的反向旋转做比较。</p></div><div><span>逆变换：重建</span><div class="formula">x(t) = ∫<sub>−∞</sub><sup>∞</sup> X(f)e<sup>i2πft</sup> df</div><p>按频谱给出的权重，把所有旋转重新相加。</p></div></div>
           <div class="translation"><strong>一句人话翻译</strong><p>把候选频率 f 的“小探针”放进信号里。如果两者节奏一致，长期累加不会互相抵消，X(f) 就大；节奏不同则正负抵消，X(f) 接近零。</p></div>
         </div>
         <div class="duality-grid">
           <div><strong>时间越窄</strong><span>频率越宽</span><p>短脉冲需要很多频率共同合成。</p></div><div><strong>时间越宽</strong><span>频率越窄</span><p>持续很久的纯音频率更集中。</p></div><div><strong>时间平移</strong><span>相位改变</span><p>幅度谱不变，但相位随频率倾斜。</p></div><div><strong>时间卷积</strong><span>频率相乘</span><p>滤波器因此能在频域高效工作。</p></div>
         </div>
+      </div>
+      <div class="lesson-depth">
+        <div><span class="depth-label">接上上一课</span><h3>从一排频率刻度，走到整条频率轴</h3><p>周期为 T 的信号只需要 f₀ = 1/T 及其整数倍，频谱像一排分开的刻度。把用于分析的时间范围拉长，刻度间隔 1/T 变小；在适当条件下，离散求和的极限就变成对连续频率的积分。</p><p>X(f) 通常是复数。|X(f)| 描述该频率成分的大小，arg X(f) 描述相位；只看幅度会丢掉波形如何对齐的信息。若把信号整体延后 τ 秒，频谱会乘上 e<sup>−i2πfτ</sup>：幅度不变，相位随频率改变。</p></div>
+        <div class="depth-steps"><strong>跟着算一遍</strong><ol><li>先想宽 0.2 秒的矩形脉冲：第一个频域零点在 1/0.2 = 5 Hz。</li><li>把宽度改成 0.1 秒，零点移到 10 Hz，说明更短的事件需要更宽的频率范围。</li><li>把脉冲整体向右平移：宽度没有变，因此幅度谱的形状不变；改变的是相位。</li></ol></div>
       </div>
       <div class="worked-example">
         <div><span class="example-label">带着数字看</span><h3>一个脉冲为什么有许多频率？</h3><p>令 x(t) 在 −τ/2 到 τ/2 之间等于 1，其余为 0。代入变换定义可得 X(f) = τ sinc(fτ)，其中 sinc(u) = sin(πu)/(πu)，且 sinc(0) = 1。第一个零点在 |f| = 1/τ：脉冲越短，主瓣越宽。</p></div>
@@ -195,6 +215,7 @@
         <div class="lesson-copy">
           <p class="eyebrow">DFT 与 FFT</p><h2>让计算机也能“看见”频率</h2>
           <p class="lead">现实中只有有限个采样点。离散傅里叶变换（DFT）把 N 个时域样本变成 N 个频域格点。</p>
+          <p class="bridge-note">方括号表示编号：x[0] 是第一个采样值，X[0] 是第一个频率结果。n 在时域数点，k 在频域数格；N 是真实采样点的总数。</p>
           <div class="formula multiline">X[k] = Σ<sub>n=0</sub><sup>N−1</sup> x[n] · e<sup>−i2πkn/N</sup><small>k 是频率格点，n 是采样点编号</small></div>
           <div class="compare-table"><div><strong>DFT</strong><p>数学变换本身；直接计算约需 O(N²) 次运算。</p></div><div><strong>FFT</strong><p>快速计算 DFT 的算法族；典型复杂度 O(N log N)。结果不是“另一种频谱”。</p></div></div>
           <div class="metric-grid"><div><span>频率分辨率</span><strong>Δf = fₛ / N</strong></div><div><span>观察时长</span><strong>T = N / fₛ</strong></div></div>
@@ -206,6 +227,10 @@
           <div class="axis"><span>0</span><span>8</span><span>16</span><span>24</span><span>32 Hz</span></div>
           <div class="reader-answer"><p>为什么只画到 32 Hz？</p><button type="button" id="revealNyquist">显示解释</button><div id="nyquistExplain" hidden>对实信号，负频率与正频率共轭对称；最高无歧义频率是奈奎斯特频率 fₛ/2 = 32 Hz。</div></div>
         </div>
+      </div>
+      <div class="lesson-depth">
+        <div><span class="depth-label">把字母放回数据里</span><h3>n 是第几个样本，k 是第几个频率格点</h3><p>采样率 fₛ 表示每秒取多少个样本，x[n] 是在 t = n/fₛ 秒取得的第 n 个值。DFT 对每个候选格点 k 计算一次相似程度，格点的实际频率是 fₖ = kfₛ/N。输出 X[k] 仍是复数，既包含强弱，也包含相位。</p><p>例如 fₛ = 64 Hz、N = 64，记录正好长 1 秒，每个格点相隔 1 Hz。图中的第 5 格是 5 Hz，第 12 格是 12 Hz。实信号的后一半格点对应负频率，和前一半共轭对称；第 0 格是直流，第 32 格是奈奎斯特边界。</p></div>
+        <div class="depth-steps"><strong>照着读图</strong><ol><li>先读题头的 fₛ 和 N，算出 Δf = 64/64 = 1 Hz，再看峰出现在哪些格点。</li><li>比较两个峰的高度：它只说明示意图中的相对强弱，未经归一化不能直接当成原始振幅。</li><li>点开“为什么只画到 32 Hz”，结合实信号的正负频率对称性核对答案。</li></ol></div>
       </div>
       <div class="worked-example">
         <div><span class="example-label">带着数字看</span><h3>采 1000 点，能分开多近的频率？</h3><p>当 fₛ = 1000 Hz、N = 1000，记录时长 T = 1 秒，DFT 格点间隔 Δf = 1 Hz。补零后若用 4096 点 FFT，显示格点变成约 0.244 Hz，但真实记录仍只有 1 秒，补零只是让频谱曲线采样更密。</p></div>
@@ -221,6 +246,7 @@
         <div class="lesson-copy">
           <p class="eyebrow">采样与混叠</p><h2>采得太慢，高频会“伪装”成低频</h2>
           <p class="lead">为了无歧义重建最高频率为 fₘₐₓ 的带限信号，采样频率必须满足 fₛ &gt; 2fₘₐₓ。等号在工程中没有安全余量。</p>
+          <p class="bridge-note">“带限”表示信号里不会出现高于某个上限的频率。这个上限必须在采样前就有保证；把数据采进来后再删高频，已经无法撤销混叠。</p>
           <div class="formula featured">fₛ &gt; 2fₘₐₓ</div>
           <div class="callout"><strong>混叠不是模糊，而是认错</strong><p>采样后，超过 fₛ/2 的频率折回低频区。例如用 20 Hz 采样 17 Hz 正弦波，样本看起来像 3 Hz。</p></div>
           <ol class="reasoning-list compact"><li><strong>采样前</strong><span>用模拟低通滤波器去掉过高频率。</span></li><li><strong>采样时</strong><span>保留足够余量，不只满足理论下限。</span></li><li><strong>分析时</strong><span>确认单位、采样率和奈奎斯特边界。</span></li></ol>
@@ -231,6 +257,10 @@
           <label class="range-label">真实信号频率 <output id="signalFreqOut">17 Hz</output><input id="signalFreq" type="range" min="1" max="30" value="17" step="1"></label>
           <label class="range-label">采样频率 <output id="sampleRateOut">20 Hz</output><input id="sampleRate" type="range" min="8" max="60" value="20" step="1"></label>
         </div>
+      </div>
+      <div class="lesson-depth">
+        <div><span class="depth-label">先分清两个时间尺度</span><h3>采样间隔决定多密，记录时长决定看多久</h3><p>每隔 1/fₛ 秒取一个点，得到的只是连续信号在这些时刻的数值。若原信号中有超过 fₛ/2 的频率，它可能与较低频率在所有采样时刻给出同一组数字，这就叫混叠。提高采样率可以提高可无歧义表示的频率上限；想分开很接近的频率，还要保证记录时间足够长。</p><p>画图中的低频曲线是与采样点相符的一个“解释”，不代表机器已经找回原信号。17 Hz 以 20 Hz 采样时对应有符号的 −3 Hz，负号表示正弦相位反转。若采样前没有限制高频，采样之后的算法无法知道这组点原来属于哪一个频率。</p></div>
+        <div class="depth-steps"><strong>照着实验</strong><ol><li>设真实频率 17 Hz、采样率 20 Hz，观察采样点同时落在高频波和低频别名曲线上。</li><li>只把采样率调到 40 Hz，奈奎斯特频率变为 20 Hz；17 Hz 不再折返。</li><li>把采样率调回 20 Hz，再试 3 Hz：两组采样点关于中线镜像；3 Hz 反相后便与 17 Hz 的样本重合。</li></ol></div>
       </div>
       <div class="worked-example">
         <div><span class="example-label">带着数字看</span><h3>20 Hz 采样的 17 Hz 变成什么？</h3><p>在 t = n/20 秒处，sin(2π·17n/20) = sin(2πn − 2π·3n/20) = −sin(2π·3n/20)。样本与相位反转的 3 Hz 波完全一样；仅凭这些样本无法确定原信号是 17 Hz 还是低频别名。</p></div>
@@ -246,6 +276,7 @@
         <div class="lesson-copy">
           <p class="eyebrow">窗函数与频谱泄漏</p><h2>截取一段信号，本身就是一次乘法</h2>
           <p class="lead">DFT 默认这段数据会首尾相接、周期重复。如果两端接不上，就形成突变，能量会“泄漏”到邻近频率。</p>
+          <p class="bridge-note">这里的“窗”是一串乘到样本上的权重，不是另一个频率。不同窗口决定边缘的样本保留多少，也就决定频谱主瓣与旁瓣的取舍。</p>
           <div class="window-cards">
             <button type="button" class="window-card active" data-window="rect"><strong>矩形窗</strong><span>分辨率高，旁瓣高</span><small>适合整周期、同步采样</small></button>
             <button type="button" class="window-card" data-window="hann"><strong>Hann 窗</strong><span>均衡、常用</span><small>通用频谱分析首选</small></button>
@@ -254,6 +285,10 @@
           <div class="callout warn"><strong>没有“最好的窗”</strong><p>主瓣越窄，越能分开相近频率；旁瓣越低，越能看清强峰旁的弱峰。两者通常不可兼得。</p></div>
         </div>
           <div class="mini-lab card"><div class="card-head"><div>窗形与频谱权衡</div><output id="windowOut">矩形窗</output></div><canvas id="windowCanvas" width="640" height="430" aria-label="窗函数的时域形状和归一化频率响应"></canvas><p class="lab-note">上：窗口权重　下：64 点窗口的归一化频率响应（中心为 0，横轴范围 ±8 个频率格点）</p></div>
+      </div>
+      <div class="lesson-depth">
+        <div><span class="depth-label">把两张图连起来</span><h3>为什么两端变小，会改变频谱的形状？</h3><p>截取 N 个样本，等价于把原信号乘上一个“只在这段时间内存在”的窗口。矩形窗的权重始终为 1，边缘可能突然截断波形；Hann 和 Blackman 在边缘逐渐降到零，减少突变。时间中的乘法对应频率中的卷积，所以窗口自身的频率响应会影响测得的频谱。</p><p>下方图画的是窗口自身的归一化频率响应，不是某个输入信号的频谱。中间的大峰叫主瓣，旁边的小峰叫旁瓣。纵轴使用幅度分贝：−40 dB 表示幅度约为峰值的 1/100。低旁瓣利于看见强信号旁的弱信号，但宽主瓣可能把邻近峰混在一起。</p></div>
+        <div class="depth-steps"><strong>照着实验</strong><ol><li>先选矩形窗，记住下图中央主瓣宽度和两侧旁瓣。</li><li>切换 Hann，再切 Blackman：比较中央主瓣变宽了多少、旁瓣又降低了多少。</li><li>回到“要分开两个很近的强峰”和“要发现强峰旁的弱峰”两个目标，尝试分别选窗并说出代价。</li></ol></div>
       </div>
       <div class="worked-example">
         <div><span class="example-label">带着数字看</span><h3>窗会怎样改变读出的幅值？</h3><p>对 64 点周期 Hann 窗，窗口权重的平均值是 0.5。一个正好落在内部 DFT 格点、远离直流和奈奎斯特频率的纯音，乘窗后的峰值约为未乘窗时的一半；做幅值标定时需要补偿这个相干增益。若频率不落在格点上，还会有栅栏效应，不能只靠乘 2 解决。</p></div>
@@ -267,14 +302,24 @@
       <div class="lesson-kicker"><span>08</span><div>第八阶段<small>持续精进</small></div></div>
       <div class="section-title"><div><p class="eyebrow">走向精通</p><h2>会算只是起点，会选择才是能力</h2></div><p>大师不是记住更多公式，而是知道假设何时成立、误差从哪里来、该换哪一种工具。</p></div>
       <div class="master-grid">
-        <article><span>信号处理</span><h3>滤波与去噪</h3><p>理解卷积定理、频率响应、线性相位、FIR/IIR 和零填充。</p><ul><li>设计低通并检查过渡带</li><li>区分噪声与窄带干扰</li><li>避免循环卷积陷阱</li></ul></article>
-        <article><span>时频分析</span><h3>短时傅里叶变换</h3><p>当信号随时间变化，用滑动窗口观察局部频谱。</p><ul><li>窗口长度决定时频权衡</li><li>读懂声谱图颜色</li><li>继续学习小波变换</li></ul></article>
-        <article><span>二维世界</span><h3>图像与空间频率</h3><p>二维傅里叶变换把纹理和边缘表示为空间方向与尺度。</p><ul><li>中心化与频谱对称</li><li>模糊、锐化与卷积核</li><li>JPEG 与频域压缩思想</li></ul></article>
-        <article><span>更深理论</span><h3>广义变换</h3><p>沿着线性代数、泛函分析和概率继续向前。</p><ul><li>正交基与内积空间</li><li>分布与狄拉克 δ</li><li>功率谱密度与随机过程</li></ul></article>
+        <article><span>信号处理</span><h3>滤波与去噪</h3><p>滤波器像频率筛子：规定哪些频率容易通过、哪些被压低。频率响应就是这把筛子对不同频率的作用。</p><ul><li>先画出想保留的频带与要压低的频带</li><li>比较有限冲激响应（FIR）和无限冲激响应（IIR）滤波器</li><li>用卷积定理检查滤波结果，并留意边界处理</li></ul></article>
+        <article><span>时频分析</span><h3>短时傅里叶变换</h3><p>把长记录切成互相重叠的短窗口，每段分别算频谱，再按时间排成声谱图。颜色越亮，通常表示该时刻该频率的能量越强。</p><ul><li>长窗口更利于分辨接近的频率</li><li>短窗口更利于定位突然发生的变化</li><li>检查颜色刻度和每段窗口的归一化方式</li></ul></article>
+        <article><span>二维世界</span><h3>图像与空间频率</h3><p>图像沿水平和垂直方向都可能重复。缓慢变化对应低空间频率，细纹理与锐利边缘包含更多高空间频率。</p><ul><li>低通通常让图像变得平滑</li><li>高通突出细节，也可能放大噪声</li><li>JPEG 使用与傅里叶思想相关的离散余弦变换</li></ul></article>
+        <article><span>更深理论</span><h3>从信号走向随机过程</h3><p>傅里叶方法本质上是在一组基函数上做投影。对随机噪声，单次幅值谱波动较大，常改用功率谱密度描述功率如何分布到频率上。</p><ul><li>用线性代数理解正交与投影</li><li>用理想脉冲模型理解冲激响应</li><li>区分确定性信号的幅值谱与噪声的功率谱</li></ul></article>
+      </div>
+      <div class="lesson-depth">
+        <div><span class="depth-label">把分析写成流程</span><h3>先定义问题，再决定用哪一种频谱</h3><p>若只问稳定纯音“有哪几个频率”，整段 FFT 往往够用；若问“什么时候开始变快”，就要分段做短时傅里叶变换。若关心随机振动或噪声在各频段的强度，可进一步使用功率谱密度；它与单次 FFT 幅值谱的单位和含义不同，报告时不能混称。</p><p>无论选择哪一种图，都要回到原始时域数据检查：是否饱和削顶，是否有异常跳变，是否记录了正确单位。频谱上的一个峰可能来自真实周期运动，也可能来自干扰、泄漏或采样设置；最好用重复测量或改变参数交叉验证。</p></div>
+        <div class="depth-steps"><strong>五步分析清单</strong><ol><li>写清目标：要找峰值、比较两频率，还是定位变化时刻？</li><li>根据目标最高频率选采样率，并在采样前安排抗混叠滤波。</li><li>根据希望区分的频率差选真实记录时长，再决定窗口与 FFT 点数。</li><li>说明单双边谱、归一化和窗口增益，给幅值附上单位。</li><li>检查噪声、漂移和重复性，报告结果的限制而不只报告一个数字。</li></ol></div>
       </div>
       <div class="final-challenge">
         <div><p class="eyebrow">毕业挑战</p><h3>为一段振动信号设计完整分析流程</h3><p>说明采样率、记录时长、窗函数、FFT 点数、幅值标定，并解释可能出现的混叠与泄漏。</p></div>
-        <div class="challenge-checks"><label><input type="checkbox"> 采样率有抗混叠余量</label><label><input type="checkbox"> 记录时长满足频率分辨率</label><label><input type="checkbox"> 窗函数符合测量目标</label><label><input type="checkbox"> 单边谱幅值已正确缩放</label><label><input type="checkbox"> 结论包含不确定性</label></div>
+        <div class="challenge-checks">
+          <label><input type="checkbox"><span><strong>采样率有抗混叠余量</strong><small>写出目标最高频率、采样率和采样前滤波的截止范围。</small></span></label>
+          <label><input type="checkbox"><span><strong>记录时长满足频率分辨率</strong><small>用 T = N/fₛ 和 Δf = 1/T 说明为什么选这个样本数。</small></span></label>
+          <label><input type="checkbox"><span><strong>窗函数符合测量目标</strong><small>说清更看重分开近邻峰，还是看清强峰旁的弱峰。</small></span></label>
+          <label><input type="checkbox"><span><strong>单边谱幅值已正确缩放</strong><small>说明 DC、奈奎斯特格点和窗口增益怎样处理。</small></span></label>
+          <label><input type="checkbox"><span><strong>结论包含不确定性</strong><small>写出噪声、频率漂移、有限记录和重复测量的影响。</small></span></label>
+        </div>
       </div>
       <div class="worked-example">
         <div><span class="example-label">完整方案示例</span><h3>分析最高约 180 Hz 的设备振动</h3><p>先在采样前用抗混叠滤波限制高于目标频带的成分，再以 1000 Hz 采样。记录 4096 个真实样本时，时长为 4.096 秒，DFT 格点约 0.244 Hz。若频率会随时间变化，再把记录分段做短时傅里叶变换；每段使用 Hann 窗，并报告窗的幅值修正、时间分辨率和频率不确定性。</p></div>
@@ -303,8 +348,16 @@
 
     <section class="section cheatsheet" id="cheatsheet">
       <div class="section-title"><div><p class="eyebrow">随手查</p><h2>傅里叶公式速查表</h2></div><p>不要死记。每次查阅时，都把符号和“它在测量什么”对应起来。</p></div>
+      <div class="notation-guide"><div><h3>先认符号，再看公式</h3><p>同一个字母放在不同括号里，含义可能不同。连续信号写成 x(t)，采样后的第 n 个值写成 x[n]；同理，连续频谱是 X(f)，DFT 的第 k 个结果是 X[k]。</p></div><dl>
+        <div><dt>t、T</dt><dd>t 是时间位置，T 常表示周期或总观察时长；看上下文区分，单位都是秒。</dd></div>
+        <div><dt>f、fₛ、ω</dt><dd>f 是每秒循环次数（Hz），fₛ 是每秒采样次数（Hz），ω = 2πf 是角频率（rad/s）。</dd></div>
+        <div><dt>A、φ</dt><dd>A 是正弦波幅值，φ 是起始相位；相位可用度或弧度表示，代入公式时要统一单位。</dd></div>
+        <div><dt>N、n、k</dt><dd>N 是真实样本数，n 标记时域样本，k 标记 DFT 的频率格点。</dd></div>
+        <div><dt>i、|X|</dt><dd>i² = −1；频谱 X 往往是复数，|X| 是它的模，只表示大小，不包含相位。</dd></div>
+        <div><dt>∫、Σ、*</dt><dd>积分和求和都是累加；卷积公式中的 * 表示卷积，不是普通乘法。</dd></div>
+      </dl></div>
       <div class="sheet-grid">
-        <div><span>正弦波</span><code>x(t)=A sin(2πft+φ)</code><p>幅值、频率、相位</p></div><div><span>欧拉公式</span><code>eⁱᶿ=cosθ+i sinθ</code><p>旋转连接三角函数</p></div><div><span>连续变换</span><code>X(f)=∫x(t)e⁻ⁱ²πᶠᵗdt</code><p>时间 → 频率</p></div><div><span>卷积定理</span><code>F{x*h}=X·H</code><p>时域卷积 = 频域相乘</p></div><div><span>DFT 格点</span><code>fₖ=kfₛ/N</code><p>第 k 个格点对应频率</p></div><div><span>奈奎斯特</span><code>fₛ&gt;2fₘₐₓ</code><p>避免频率身份混淆</p></div><div><span>分辨率</span><code>Δf=fₛ/N=1/T</code><p>由观察时长决定</p></div><div><span>Parseval</span><code>∫|x|²dt=∫|X|²df</code><p>能量在两域守恒</p></div>
+        <div><span>正弦波</span><code>x(t)=A sin(2πft+φ)</code><p>A 管高度，f 管快慢，φ 管起点。</p></div><div><span>欧拉公式</span><code>e<sup>iθ</sup>=cosθ+i sinθ</code><p>单位圆上的横、纵坐标。</p></div><div><span>连续变换</span><code>X(f)=∫x(t)e<sup>−i2πft</sup>dt</code><p>把信号与候选频率比较。</p></div><div><span>卷积定理</span><code>F{x*h}=X·H</code><p>这里的 * 是卷积；时域卷积对应频域相乘。</p></div><div><span>DFT 格点</span><code>fₖ=kfₛ/N</code><p>第 k 个格点对应的频率。</p></div><div><span>奈奎斯特</span><code>fₛ&gt;2fₘₐₓ</code><p>带限信号无歧义采样的基本条件。</p></div><div><span>格点间隔</span><code>Δf=fₛ/N=1/T</code><p>由真实观察时长决定。</p></div><div><span>Parseval</span><code>∫|x|²dt=∫|X|²df</code><p>在此变换定义下，两域总能量相等。</p></div>
       </div>
     </section>
 

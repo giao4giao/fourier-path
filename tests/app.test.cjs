@@ -72,11 +72,16 @@ test('invalid saved progress cannot prevent the lessons from loading', () => {
 test('every lesson includes a worked example and an answerable concept check', () => {
   const { context } = loadApp();
   const answerKey = vm.runInContext('Object.fromEntries(Object.entries(quizFeedback).map(([key, value]) => [key, value.answer]))', context);
-  assert.equal((html.match(/class="worked-example"/g) || []).length, 8);
-  assert.equal((html.match(/class="checkpoint"/g) || []).length, 8);
-  for (const [key, answer] of Object.entries(answerKey)) {
-    const group = html.match(new RegExp(`data-quiz="${key}"[^<]*>[\\s\\S]*?<\\/div>`));
-    assert.ok(group, `missing quiz ${key}`);
-    assert.ok(group[0].includes(`data-answer="${answer}"`), `missing correct option for ${key}`);
+  const lessons = [...html.matchAll(/<section\b[^>]*data-lesson="(\d)"[^>]*>([\s\S]*?)<\/section>/g)];
+  assert.equal(lessons.length, 8);
+  for (const [, index, content] of lessons) {
+    assert.match(content, /class="lesson-depth"/, `lesson ${index} needs a guided explanation`);
+    assert.match(content, /class="depth-steps"/, `lesson ${index} needs practical steps`);
+    assert.match(content, /class="worked-example"/, `lesson ${index} needs a worked example`);
+    assert.match(content, /class="checkpoint"/, `lesson ${index} needs a concept check`);
+    const key = content.match(/data-quiz="([^"]+)"/)?.[1];
+    assert.ok(key && answerKey[key], `lesson ${index} has no answer key`);
+    assert.ok(content.includes(`data-answer="${answerKey[key]}"`), `missing correct option for ${key}`);
   }
+  assert.match(html, /class="notation-guide"/);
 });

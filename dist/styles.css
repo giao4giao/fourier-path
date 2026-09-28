@@ -159,3 +159,32 @@ footer p{color:var(--paper-muted)}footer a{color:var(--cyan)}
   .topbar-actions{gap:15px}.top-link{font-size:12px}
   h1{font-size:clamp(37px,10vw,47px)}
 }
+
+.roadmap-hint{border-top:1px solid #bdcbbd;margin:35px 0 0;padding-top:20px;max-width:900px;color:#52665a;font-size:15px;line-height:1.9}
+.roadmap-hint strong{color:#294b3e}
+.bridge-note{font-size:14px;line-height:1.85;color:#4e6458;border-left:2px solid #aac0a9;padding:2px 0 2px 14px;margin:0 0 19px}
+.lesson-depth{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(270px,.65fr);gap:clamp(28px,5vw,75px);border-top:1px solid var(--line);margin-top:46px;padding-top:32px}
+.lesson-depth .depth-label{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--amber)}
+.lesson-depth h3{font-size:clamp(22px,2.3vw,29px);line-height:1.35;margin:8px 0 16px}
+.lesson-depth p{font-size:15px;line-height:1.95;color:#4d6156;margin:0 0 14px;max-width:74ch}
+.lesson-depth .depth-steps{background:#e9eee5;border-left:2px solid #8eaa8d;padding:21px 24px;align-self:start}
+.depth-steps>strong{font-size:13px;color:#335b45}
+.depth-steps ol{padding-left:20px;margin:13px 0 0}
+.depth-steps li{font-size:14px;line-height:1.75;color:#4d6253}
+.depth-steps li+li{margin-top:11px}
+.dark-band .lesson-depth{border-color:#cbd2c6}
+.dark-band .lesson-depth p{color:#4d6156}
+.dark-band .depth-steps{background:#e0e8dd}
+.challenge-checks label{display:flex;align-items:flex-start;gap:11px;padding:10px 4px 12px}
+.challenge-checks input{flex:none;margin:5px 0 0}
+.challenge-checks label strong,.challenge-checks label small{display:block}
+.challenge-checks label strong{font-size:13px;color:#294b3c;font-weight:650}
+.challenge-checks label small{font-size:12px;color:#5f7164;line-height:1.55;margin-top:3px}
+.notation-guide{border-top:2px solid #b8c9bb;border-bottom:1px solid #b8c9bb;padding:24px 0 30px;margin-bottom:25px}
+.notation-guide h3{font-size:26px;margin:0 0 8px}.notation-guide>div>p{font-size:14px;color:#52665a;line-height:1.85;max-width:920px;margin:0 0 21px}
+.notation-guide dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 26px;margin:0}
+.notation-guide dl>div{border-top:1px solid #c9d4c7;padding-top:10px}
+.notation-guide dt{font-family:Georgia,serif;font-weight:700;font-size:18px;color:#31594a}
+.notation-guide dd{font-size:13px;color:#566a5d;line-height:1.75;margin:5px 0 0}
+@media(max-width:1100px){.lesson-depth{grid-template-columns:1fr}.notation-guide dl{grid-template-columns:1fr 1fr}}
+@media(max-width:780px){.lesson-depth{margin-top:34px;padding-top:25px}.lesson-depth .depth-steps{padding:18px}.notation-guide dl{grid-template-columns:1fr}}
