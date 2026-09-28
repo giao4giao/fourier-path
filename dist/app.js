@@ -1,6 +1,6 @@
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
-const COLORS = { bg:'#091725', grid:'#1a3042', cyan:'#3de1c2', amber:'#ffbf69', muted:'#718999', ink:'#d9eeea', red:'#ff7a7a' };
+const COLORS = { bg:'#1b3031', grid:'#334a49', cyan:'#a1d4b8', amber:'#e8b57b', muted:'#afc1b8', ink:'#eff2e9', red:'#d98b74' };
 
 function setupCanvas(canvas){
   const dpr=Math.min(window.devicePixelRatio||1,2), rect=canvas.getBoundingClientRect();
