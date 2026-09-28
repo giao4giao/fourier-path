@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="从波形直觉、复数与傅里叶级数开始，循序渐进掌握傅里叶变换、DFT、FFT、采样、窗函数和工程应用。">
+  <meta name="theme-color" content="#07111f">
+  <title>傅里叶之路｜从直觉到精通</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%2307111f'/%3E%3Cpath d='M8 33c7-22 13 22 20 0s13-22 20 0 7 0 8 0' fill='none' stroke='%233de1c2' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到课程内容</a>
+  <aside class="sidebar" aria-label="课程导航">
+    <a class="brand" href="#top" aria-label="傅里叶之路首页">
+      <span class="brand-mark" aria-hidden="true">∿</span>
+      <span><strong>傅里叶之路</strong><small>FOURIER PATH</small></span>
+    </a>
+    <div class="progress-wrap">
+      <div class="progress-line"><span>学习进度</span><strong id="progressText">0 / 8</strong></div>
+      <div class="progress-track" aria-hidden="true"><span id="progressBar"></span></div>
+    </div>
+    <nav id="courseNav">
+      <a href="#intuition" data-module="1"><span>01</span>波形与频率</a>
+      <a href="#complex" data-module="2"><span>02</span>复数与相位</a>
+      <a href="#series" data-module="3"><span>03</span>傅里叶级数</a>
+      <a href="#transform" data-module="4"><span>04</span>傅里叶变换</a>
+      <a href="#dft" data-module="5"><span>05</span>DFT 与 FFT</a>
+      <a href="#sampling" data-module="6"><span>06</span>采样与混叠</a>
+      <a href="#window" data-module="7"><span>07</span>窗与频谱泄漏</a>
+      <a href="#mastery" data-module="8"><span>08</span>走向精通</a>
+    </nav>
+    <button class="ghost-btn" id="resetProgress" type="button">重置学习记录</button>
+  </aside>
+
+  <main id="main">
+    <header class="topbar" id="top">
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="打开课程目录" aria-expanded="false">目录</button>
+      <div class="topbar-title">交互式学习路径</div>
+      <a class="top-link" href="#cheatsheet">公式速查</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">从“看见”频率开始</p>
+        <h1>把复杂的波，<br><em>拆成简单的旋转。</em></h1>
+        <p class="hero-lead">傅里叶变换并不神秘：它是在问——一个信号里，分别藏着多少种频率？先动手，再看公式；先建立直觉，再完成推导。</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#intuition">开始第一课</a>
+          <a class="text-btn" href="#roadmap">查看完整路线 <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="promise-grid" aria-label="课程特点">
+          <div><strong>8</strong><span>阶段路径</span></div>
+          <div><strong>6</strong><span>交互实验</span></div>
+          <div><strong>3 层</strong><span>直觉·公式·工程</span></div>
+        </div>
+      </div>
+      <div class="hero-lab card" aria-label="实时信号实验室">
+        <div class="card-head">
+          <div><span class="live-dot"></span>实时实验室</div>
+          <button class="icon-btn" id="randomSignal" type="button" title="随机参数">随机</button>
+        </div>
+        <canvas id="heroCanvas" width="760" height="430" aria-label="由两个正弦波组成的时域信号及其频谱"></canvas>
+        <div class="control-grid">
+          <label>频率 A <output id="f1Out">2 Hz</output><input id="f1" type="range" min="1" max="10" value="2" step="1"></label>
+          <label>振幅 A <output id="a1Out">1.0</output><input id="a1" type="range" min="0" max="1.5" value="1" step="0.1"></label>
+          <label>频率 B <output id="f2Out">6 Hz</output><input id="f2" type="range" min="1" max="10" value="6" step="1"></label>
+          <label>振幅 B <output id="a2Out">0.5</output><input id="a2" type="range" min="0" max="1.5" value="0.5" step="0.1"></label>
+        </div>
+        <p class="lab-note"><span class="cyan">上：</span>时间中看到的混合波形　<span class="amber">下：</span>频率中看到的两种成分</p>
+      </div>
+    </section>
+
+    <section class="roadmap section" id="roadmap">
+      <div class="section-title">
+        <div><p class="eyebrow">学习地图</p><h2>从零基础到能解决真实问题</h2></div>
+        <p>每一阶段只引入一个关键观念。完成实验与检查点后再前进。</p>
+      </div>
+      <div class="roadmap-grid">
+        <article><span>基础直觉</span><strong>01—02</strong><p>读懂波形、频率、相位、复平面与旋转向量。</p></article>
+        <article><span>核心理论</span><strong>03—04</strong><p>从周期信号的级数，走到一般信号的连续变换。</p></article>
+        <article><span>数字实现</span><strong>05—07</strong><p>理解采样、DFT、FFT、混叠、分辨率与窗函数。</p></article>
+        <article><span>工程精通</span><strong>08+</strong><p>能选参数、判读频谱、避免陷阱并迁移到多领域。</p></article>
+      </div>
+    </section>
+
+    <section class="lesson section" id="intuition" data-lesson="1">
+      <div class="lesson-kicker"><span>01</span><div>第一阶段<small>预计 35 分钟</small></div></div>
+      <div class="lesson-grid">
+        <div class="lesson-copy">
+          <p class="eyebrow">波形与频率</p>
+          <h2>先别急着算：频率到底是什么？</h2>
+          <p class="lead">波形描述“数值如何随时间变化”；频率描述“这种变化每秒重复多少次”。1 Hz 就是一秒完成一次完整循环。</p>
+          <div class="concept-stack">
+            <div><span class="term">振幅 A</span><p>波有多“高”。声音里常对应强弱，能量通常与振幅平方相关。</p></div>
+            <div><span class="term">频率 f</span><p>波每秒循环几次，单位 Hz。周期 <code>T = 1 / f</code>。</p></div>
+            <div><span class="term">相位 φ</span><p>波从循环的哪个位置出发。它改变左右位置，不改变频率。</p></div>
+          </div>
+          <div class="formula">x(t) = A · sin(2πft + φ)</div>
+          <details><summary>展开数学层：为什么是 2πf？</summary><p>正弦函数的一个完整循环是 2π 弧度。每秒循环 f 次，所以角速度是 ω = 2πf，单位 rad/s。</p></details>
+        </div>
+        <div class="mini-lab card">
+          <div class="card-head"><div>相位移动实验</div><output id="phaseOut">0°</output></div>
+          <canvas id="phaseWaveCanvas" width="640" height="350" aria-label="不同相位下的正弦波"></canvas>
+          <label class="range-label">相位 φ<input id="phase" type="range" min="-180" max="180" value="0" step="5"></label>
+          <p class="insight" id="phaseInsight">0°：波从零点向上出发。</p>
+        </div>
+      </div>
+      <div class="checkpoint"><div><strong>检查点</strong><p>改变相位会让频谱峰值左右移动吗？</p></div><div class="choice-row" data-quiz="phase"><button type="button" data-answer="no">不会</button><button type="button" data-answer="yes">会</button></div><p class="feedback" aria-live="polite"></p></div>
+      <button class="complete-btn" type="button" data-complete="1">完成第一阶段</button>
+    </section>
+
+    <section class="lesson section dark-band" id="complex" data-lesson="2">
+      <div class="lesson-kicker"><span>02</span><div>第二阶段<small>预计 50 分钟</small></div></div>
+      <div class="lesson-grid">
+        <div class="lesson-copy">
+          <p class="eyebrow">复数、象限与相位</p>
+          <h2>所谓“象限变化”，其实是一个向量在旋转</h2>
+          <p class="lead">复数不是多出来的神秘数字，而是同时记录两个方向：横轴是实部，纵轴是虚部。欧拉公式把旋转和正弦波连在了一起。</p>
+          <div class="formula featured">e<sup>iθ</sup> = cos θ + i sin θ</div>
+          <table class="quadrant-table">
+            <thead><tr><th>象限</th><th>角度</th><th>cos（实部）</th><th>sin（虚部）</th></tr></thead>
+            <tbody><tr><td>Ⅰ</td><td>0°～90°</td><td>＋</td><td>＋</td></tr><tr><td>Ⅱ</td><td>90°～180°</td><td>－</td><td>＋</td></tr><tr><td>Ⅲ</td><td>180°～270°</td><td>－</td><td>－</td></tr><tr><td>Ⅳ</td><td>270°～360°</td><td>＋</td><td>－</td></tr></tbody>
+          </table>
+          <div class="callout"><strong>核心直觉</strong><p>一个旋转向量在纵轴上的投影，就是正弦波。转得越快，频率越高；起始角度不同，相位就不同。</p></div>
+        </div>
+        <div class="mini-lab card">
+          <div class="card-head"><div>复平面旋转器</div><output id="angleOut">45° · 象限Ⅰ</output></div>
+          <canvas id="complexCanvas" width="640" height="460" aria-label="复平面中的旋转向量"></canvas>
+          <label class="range-label">角度 θ<input id="angle" type="range" min="0" max="360" value="45" step="1"></label>
+          <div class="value-pills"><span>实部 <strong id="realOut">0.707</strong></span><span>虚部 <strong id="imagOut">0.707</strong></span><span>模长 <strong>1.000</strong></span></div>
+        </div>
+      </div>
+      <button class="complete-btn" type="button" data-complete="2">完成第二阶段</button>
+    </section>
+
+    <section class="lesson section" id="series" data-lesson="3">
+      <div class="lesson-kicker"><span>03</span><div>第三阶段<small>预计 70 分钟</small></div></div>
+      <div class="lesson-grid">
+        <div class="lesson-copy">
+          <p class="eyebrow">傅里叶级数</p><h2>用许多简单正弦波，拼出复杂的周期波</h2>
+          <p class="lead">对周期为 T 的信号，基频是 f₀ = 1/T。傅里叶级数用基频及其整数倍——谐波——逐步逼近原信号。</p>
+          <div class="formula multiline">x(t) = a₀/2 + Σ [aₙ cos(nω₀t) + bₙ sin(nω₀t)]<small>ω₀ = 2π/T，n = 1, 2, 3…</small></div>
+          <ol class="reasoning-list"><li><strong>选基频</strong><span>周期决定最慢的一圈。</span></li><li><strong>逐个比较</strong><span>用内积测量信号与每个正弦/余弦的相似程度。</span></li><li><strong>得到系数</strong><span>系数告诉你每种谐波需要多少。</span></li><li><strong>重新相加</strong><span>保留越多谐波，重建越精细。</span></li></ol>
+          <div class="callout warn"><strong>吉布斯现象</strong><p>在方波跳变处，即使加入越来越多谐波，过冲不会完全消失，只会挤到更窄的区域；极限过冲约为跳变量的 9%。</p></div>
+        </div>
+        <div class="mini-lab card">
+          <div class="card-head"><div>方波合成器</div><output id="harmonicOut">5 个奇次谐波</output></div>
+          <canvas id="seriesCanvas" width="640" height="400" aria-label="不同谐波数量对方波的逼近"></canvas>
+          <label class="range-label">保留谐波数量<input id="harmonics" type="range" min="1" max="25" value="5" step="1"></label>
+          <p class="lab-note">方波只需要奇次谐波：1、3、5…；振幅按 1/n 衰减。</p>
+        </div>
+      </div>
+      <button class="complete-btn" type="button" data-complete="3">完成第三阶段</button>
+    </section>
+
+    <section class="lesson section dark-band" id="transform" data-lesson="4">
+      <div class="lesson-kicker"><span>04</span><div>第四阶段<small>预计 90 分钟</small></div></div>
+      <div class="lesson-grid single-focus">
+        <div class="lesson-copy">
+          <p class="eyebrow">连续傅里叶变换</p><h2>当周期无限长，离散谐波变成连续频率</h2>
+          <p class="lead">傅里叶级数处理周期信号；傅里叶变换把“重复周期”推向无穷大，因此频率间隔趋近于零，得到连续频谱。</p>
+          <div class="formula-pair"><div><span>正变换：分析</span><div class="formula">X(f) = ∫ x(t)e<sup>−i2πft</sup> dt</div><p>让信号分别与每个频率的反向旋转做比较。</p></div><div><span>逆变换：重建</span><div class="formula">x(t) = ∫ X(f)e<sup>i2πft</sup> df</div><p>按频谱给出的权重，把所有旋转重新相加。</p></div></div>
+          <div class="translation"><strong>一句人话翻译</strong><p>把候选频率 f 的“小探针”放进信号里。如果两者节奏一致，长期累加不会互相抵消，X(f) 就大；节奏不同则正负抵消，X(f) 接近零。</p></div>
+        </div>
+        <div class="duality-grid">
+          <div><strong>时间越窄</strong><span>频率越宽</span><p>短脉冲需要很多频率共同合成。</p></div><div><strong>时间越宽</strong><span>频率越窄</span><p>持续很久的纯音频率更集中。</p></div><div><strong>时间平移</strong><span>相位改变</span><p>幅度谱不变，但相位随频率倾斜。</p></div><div><strong>时间卷积</strong><span>频率相乘</span><p>滤波器因此能在频域高效工作。</p></div>
+        </div>
+      </div>
+      <div class="checkpoint"><div><strong>概念检查</strong><p>一个持续时间极短的脉冲，它的频谱通常更窄还是更宽？</p></div><div class="choice-row" data-quiz="pulse"><button type="button" data-answer="wide">更宽</button><button type="button" data-answer="narrow">更窄</button></div><p class="feedback" aria-live="polite"></p></div>
+      <button class="complete-btn" type="button" data-complete="4">完成第四阶段</button>
+    </section>
+
+    <section class="lesson section" id="dft" data-lesson="5">
+      <div class="lesson-kicker"><span>05</span><div>第五阶段<small>预计 80 分钟</small></div></div>
+      <div class="lesson-grid">
+        <div class="lesson-copy">
+          <p class="eyebrow">DFT 与 FFT</p><h2>让计算机也能“看见”频率</h2>
+          <p class="lead">现实中只有有限个采样点。离散傅里叶变换（DFT）把 N 个时域样本变成 N 个频域格点。</p>
+          <div class="formula multiline">X[k] = Σ<sub>n=0</sub><sup>N−1</sup> x[n] · e<sup>−i2πkn/N</sup><small>k 是频率格点，n 是采样点编号</small></div>
+          <div class="compare-table"><div><strong>DFT</strong><p>数学变换本身；直接计算约需 O(N²) 次运算。</p></div><div><strong>FFT</strong><p>快速计算 DFT 的算法族；典型复杂度 O(N log N)。结果不是“另一种频谱”。</p></div></div>
+          <div class="metric-grid"><div><span>频率分辨率</span><strong>Δf = fₛ / N</strong></div><div><span>观察时长</span><strong>T = N / fₛ</strong></div></div>
+          <p class="muted">要分开两个很接近的频率，关键通常不是盲目提高采样率，而是增加观察时长。</p>
+        </div>
+        <div class="mini-lab card spectrum-reader">
+          <div class="card-head"><div>频谱读图训练</div><span>示例：fₛ = 64 Hz，N = 64</span></div>
+          <div class="spectrum-bars" aria-label="在 5 Hz 和 12 Hz 处有峰值的频谱"><i style="--x:15.6%;--h:78%"><b>5 Hz</b></i><i style="--x:37.5%;--h:48%"><b>12 Hz</b></i></div>
+          <div class="axis"><span>0</span><span>8</span><span>16</span><span>24</span><span>32 Hz</span></div>
+          <div class="reader-answer"><p>为什么只画到 32 Hz？</p><button type="button" id="revealNyquist">显示解释</button><div id="nyquistExplain" hidden>对实信号，负频率与正频率共轭对称；最高无歧义频率是奈奎斯特频率 fₛ/2 = 32 Hz。</div></div>
+        </div>
+      </div>
+      <button class="complete-btn" type="button" data-complete="5">完成第五阶段</button>
+    </section>
+
+    <section class="lesson section dark-band" id="sampling" data-lesson="6">
+      <div class="lesson-kicker"><span>06</span><div>第六阶段<small>预计 60 分钟</small></div></div>
+      <div class="lesson-grid">
+        <div class="lesson-copy">
+          <p class="eyebrow">采样与混叠</p><h2>采得太慢，高频会“伪装”成低频</h2>
+          <p class="lead">为了无歧义重建最高频率为 fₘₐₓ 的带限信号，采样频率必须满足 fₛ &gt; 2fₘₐₓ。等号在工程中没有安全余量。</p>
+          <div class="formula featured">fₛ &gt; 2fₘₐₓ</div>
+          <div class="callout"><strong>混叠不是模糊，而是认错</strong><p>采样后，超过 fₛ/2 的频率折回低频区。例如用 20 Hz 采样 17 Hz 正弦波，样本看起来像 3 Hz。</p></div>
+          <ol class="reasoning-list compact"><li><strong>采样前</strong><span>用模拟低通滤波器去掉过高频率。</span></li><li><strong>采样时</strong><span>保留足够余量，不只满足理论下限。</span></li><li><strong>分析时</strong><span>确认单位、采样率和奈奎斯特边界。</span></li></ol>
+        </div>
+        <div class="mini-lab card">
+          <div class="card-head"><div>混叠实验</div><output id="aliasOut">真实 17 Hz → 看似 3 Hz</output></div>
+          <canvas id="aliasCanvas" width="640" height="400" aria-label="连续波形与离散采样点产生的混叠"></canvas>
+          <label class="range-label">真实信号频率 <output id="signalFreqOut">17 Hz</output><input id="signalFreq" type="range" min="1" max="30" value="17" step="1"></label>
+          <label class="range-label">采样频率 <output id="sampleRateOut">20 Hz</output><input id="sampleRate" type="range" min="8" max="60" value="20" step="1"></label>
+        </div>
+      </div>
+      <button class="complete-btn" type="button" data-complete="6">完成第六阶段</button>
+    </section>
+
+    <section class="lesson section" id="window" data-lesson="7">
+      <div class="lesson-kicker"><span>07</span><div>第七阶段<small>预计 70 分钟</small></div></div>
+      <div class="lesson-grid">
+        <div class="lesson-copy">
+          <p class="eyebrow">窗函数与频谱泄漏</p><h2>截取一段信号，本身就是一次乘法</h2>
+          <p class="lead">DFT 默认这段数据会首尾相接、周期重复。如果两端接不上，就形成突变，能量会“泄漏”到邻近频率。</p>
+          <div class="window-cards">
+            <button type="button" class="window-card active" data-window="rect"><strong>矩形窗</strong><span>分辨率高，旁瓣高</span><small>适合整周期、同步采样</small></button>
+            <button type="button" class="window-card" data-window="hann"><strong>Hann 窗</strong><span>均衡、常用</span><small>通用频谱分析首选</small></button>
+            <button type="button" class="window-card" data-window="blackman"><strong>Blackman 窗</strong><span>旁瓣低，主瓣宽</span><small>看弱信号靠近强信号</small></button>
+          </div>
+          <div class="callout warn"><strong>没有“最好的窗”</strong><p>主瓣越窄，越能分开相近频率；旁瓣越低，越能看清强峰旁的弱峰。两者通常不可兼得。</p></div>
+        </div>
+        <div class="mini-lab card"><div class="card-head"><div>窗形与频谱权衡</div><output id="windowOut">矩形窗</output></div><canvas id="windowCanvas" width="640" height="430" aria-label="窗函数的时域形状和频域主瓣旁瓣"></canvas><p class="lab-note">上：窗口权重　下：示意频谱（主瓣宽度与旁瓣高度）</p></div>
+      </div>
+      <button class="complete-btn" type="button" data-complete="7">完成第七阶段</button>
+    </section>
+
+    <section class="lesson section mastery dark-band" id="mastery" data-lesson="8">
+      <div class="lesson-kicker"><span>08</span><div>第八阶段<small>持续精进</small></div></div>
+      <div class="section-title"><div><p class="eyebrow">走向精通</p><h2>会算只是起点，会选择才是能力</h2></div><p>大师不是记住更多公式，而是知道假设何时成立、误差从哪里来、该换哪一种工具。</p></div>
+      <div class="master-grid">
+        <article><span>信号处理</span><h3>滤波与去噪</h3><p>理解卷积定理、频率响应、线性相位、FIR/IIR 和零填充。</p><ul><li>设计低通并检查过渡带</li><li>区分噪声与窄带干扰</li><li>避免循环卷积陷阱</li></ul></article>
+        <article><span>时频分析</span><h3>短时傅里叶变换</h3><p>当信号随时间变化，用滑动窗口观察局部频谱。</p><ul><li>窗口长度决定时频权衡</li><li>读懂声谱图颜色</li><li>继续学习小波变换</li></ul></article>
+        <article><span>二维世界</span><h3>图像与空间频率</h3><p>二维傅里叶变换把纹理和边缘表示为空间方向与尺度。</p><ul><li>中心化与频谱对称</li><li>模糊、锐化与卷积核</li><li>JPEG 与频域压缩思想</li></ul></article>
+        <article><span>更深理论</span><h3>广义变换</h3><p>沿着线性代数、泛函分析和概率继续向前。</p><ul><li>正交基与内积空间</li><li>分布与狄拉克 δ</li><li>功率谱密度与随机过程</li></ul></article>
+      </div>
+      <div class="final-challenge">
+        <div><p class="eyebrow">毕业挑战</p><h3>为一段振动信号设计完整分析流程</h3><p>说明采样率、记录时长、窗函数、FFT 点数、幅值标定，并解释可能出现的混叠与泄漏。</p></div>
+        <div class="challenge-checks"><label><input type="checkbox"> 采样率有抗混叠余量</label><label><input type="checkbox"> 记录时长满足频率分辨率</label><label><input type="checkbox"> 窗函数符合测量目标</label><label><input type="checkbox"> 单边谱幅值已正确缩放</label><label><input type="checkbox"> 结论包含不确定性</label></div>
+      </div>
+      <button class="complete-btn" type="button" data-complete="8">完成大师路径</button>
+    </section>
+
+    <section class="section cheatsheet" id="cheatsheet">
+      <div class="section-title"><div><p class="eyebrow">随手查</p><h2>傅里叶公式速查表</h2></div><p>不要死记。每次查阅时，都把符号和“它在测量什么”对应起来。</p></div>
+      <div class="sheet-grid">
+        <div><span>正弦波</span><code>x(t)=A sin(2πft+φ)</code><p>幅值、频率、相位</p></div><div><span>欧拉公式</span><code>eⁱᶿ=cosθ+i sinθ</code><p>旋转连接三角函数</p></div><div><span>连续变换</span><code>X(f)=∫x(t)e⁻ⁱ²πᶠᵗdt</code><p>时间 → 频率</p></div><div><span>卷积定理</span><code>F{x*h}=X·H</code><p>时域卷积 = 频域相乘</p></div><div><span>DFT 格点</span><code>fₖ=kfₛ/N</code><p>第 k 个格点对应频率</p></div><div><span>奈奎斯特</span><code>fₛ&gt;2fₘₐₓ</code><p>避免频率身份混淆</p></div><div><span>分辨率</span><code>Δf=fₛ/N=1/T</code><p>由观察时长决定</p></div><div><span>Parseval</span><code>∫|x|²dt=∫|X|²df</code><p>能量在两域守恒</p></div>
+      </div>
+    </section>
+
+    <footer><div class="brand"><span class="brand-mark">∿</span><span><strong>傅里叶之路</strong><small>理解，而不是背诵</small></span></div><p>建议顺序：拖动参数 → 说出观察 → 阅读公式 → 独立推导。</p><a href="#top">回到顶部 ↑</a></footer>
+  </main>
+  <div class="scrim" id="scrim"></div>
+  <script src="app.js"></script>
+</body>
+</html>

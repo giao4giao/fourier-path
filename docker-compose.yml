@@ -1,0 +1,9 @@
+services:
+  fourier-path:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fourier-path
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8080}:80"
